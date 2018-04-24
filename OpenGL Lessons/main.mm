@@ -46,7 +46,8 @@ int main(int argc, const char * argv[]) {
         glfwSetScrollCallback(window, scrollCallback);
         ShaderProgram program = ShaderProgram("/Users/jeslyvarghese/Workspace/Extra/Open GL/Lessons/OpenGL Lessons/OpenGL Lessons/Shaders/rectangle.vsh", "/Users/jeslyvarghese/Workspace/Extra/Open GL/Lessons/OpenGL Lessons/OpenGL Lessons/Shaders/rectangle.fsh");
         GLuint shaderProgram = program.getProgram();
-
+        program.use();
+        
         GLfloat vertices[] = {
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -157,10 +158,10 @@ int main(int argc, const char * argv[]) {
             
             glClearColor(0.0f, 0.0f, 0.0f, 1.f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            
-            glm::mat4 model;
-            model = glm::rotate(model, (GLfloat)glfwGetTime()*glm::radians(50.0f), glm::vec3(1., 0., 0.));
-            
+
+            GLfloat radius = 10.f;
+            GLfloat cameraX = sin(glfwGetTime()) * radius;
+            GLfloat cameraZ = cos(glfwGetTime()) * radius;
             glm::mat4 view;
             view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
             
@@ -186,7 +187,7 @@ int main(int argc, const char * argv[]) {
             
             glBindVertexArray(0);
             
-            GLfloat currentFrame = glfwGetTime();
+            sGLfloat currentFrame = glfwGetTime();
             deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
             glfwSwapBuffers(window);
